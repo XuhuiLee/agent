@@ -23,6 +23,11 @@ public class ReadController {
     public void index(HttpServletRequest request, HttpServletResponse response, @PathVariable String cmd) throws IOException {
 
         Process process = Runtime.getRuntime().exec(cmd);
+        try {
+            process.waitFor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         int exitVal = process.exitValue();
         InputStream is = null;
         OutputStream os = response.getOutputStream();
